@@ -4,3 +4,5 @@ mysql_host = "localhost"
 mysql_user = "root"
 mysql_password = ""
 mysql_database = "assign"
+
+SECRET_KEY = "putyoursecretkeyhere"

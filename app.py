@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
+from functools import wraps
 from config import *
 
 app = Flask(__name__)
@@ -13,14 +14,27 @@ db = SQLAlchemy(app)
 api = Api(app)
 
 
+def require_api_token(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        print (args, kwargs)
+        return f(*args, **kwargs)
+
+    return decorated
+
+
 class Home(Resource):
+
+    @require_api_token
     def get(self):
-
         app_name = {'assign': 'api'}
-
         return app_name
 
+
+
 api.add_resource(Home, '/')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
