@@ -2,6 +2,7 @@ from config import *
 from sqlalchemy import create_engine, Column, DateTime, String, Integer, ForeignKey, Text, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
@@ -47,8 +48,8 @@ class Client(Base):
 class Token(Base):
     __tablename__ = 'Token'
     id = Column(Integer, primary_key=True)
-    client_id = Column(String(40), ForeignKey('client.client_id'))
-    user_id = Column(Integer, ForeignKey('user.id'))
+    client_id = Column(String(40), ForeignKey(Client.client_id))
+    user_id = Column(Integer, ForeignKey(User.id))
     token_type = Column(String(40))
     access_token = Column(String(255))
     refresh_token = Column(String(255))
@@ -73,6 +74,7 @@ class Course(Base):
     id = Column(Integer, primary_key=True)
     course_name = Column(String(250))
     semester_id = Column(Integer, ForeignKey(Semester.id))
+    semester = relationship("Semester", backref="Course")
     runscript_url = Column(String(250))
     runscript_port = Column(String(25))
 
@@ -86,7 +88,7 @@ class Assignment(Base):
     use_date_control = Column(Boolean, default=False)
     group_submission = Column(Boolean, default=False)
     students_per_group_min = Column(Integer, default=0)
-    students_per_group_max = Column(Integer, default=4)
+    students_per_group_max = Column(Integer, default=20)
     due_date = Column(DateTime, nullable=False)
     access_open_date = Column(DateTime)
     access_close_date = Column(DateTime)

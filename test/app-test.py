@@ -54,7 +54,7 @@ class CourseTestCase(unittest.TestCase):
 
     def test_index(self):
 
-        courses = self.session.query(Course).all()
+        courses = self.session.query(Course, Semester).join(Semester, Course.semester_id == Semester.id).all()
         courses_json = courses_to_json(courses)
 
         response = self.client.get('/courses', content_type='application/json')

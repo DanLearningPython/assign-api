@@ -3,6 +3,7 @@ from flask_restful import Resource, Api
 from functools import wraps
 from models import *
 from helpers import courses_to_json
+import json
 
 app = Flask(__name__)
 
@@ -28,15 +29,20 @@ class Home(Resource):
 
 class CourseApi(Resource):
 
+
     @require_api_token
     def get(self):
         course_session = session()
 
-        courses = course_session.query(Course).all()
+        courses = course_session.query(Course, Semester).join(Semester, Course.semester_id == Semester.id).all()
+        #print (courses.statement)
         courses_json = courses_to_json(courses)
         course_session.close()
 
         return courses_json
+
+
+
 
 
 api.add_resource(Home, '/')
