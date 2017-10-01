@@ -44,7 +44,6 @@ class CourseTestCase(unittest.TestCase):
         self.session.add(semester)
         self.session.commit()
         self.semester = semester
-        print(semester.id)
 
         course = Course()
         course.course_name = "Test Course"
