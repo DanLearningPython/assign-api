@@ -13,4 +13,4 @@ def courses_to_json(courses):
         }
         json_result.append(tmp.copy())
 
-    return json.dumps(json_result)
+    return (json_result)

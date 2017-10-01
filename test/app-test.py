@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from helpers import courses_to_json
 
-from model import *
+from models import *
 
 
 class GeneralTestCases(unittest.TestCase):
@@ -44,6 +44,7 @@ class CourseTestCase(unittest.TestCase):
         self.session.add(semester)
         self.session.commit()
         self.semester = semester
+        print(semester.id)
 
         course = Course()
         course.course_name = "Test Course"
