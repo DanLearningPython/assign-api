@@ -75,6 +75,7 @@ class Course(Base):
     course_name = Column(String(250))
     semester_id = Column(Integer, ForeignKey(Semester.id))
     semester = relationship("Semester", backref="Course")
+    assignments = relationship("Assignment", backref="Course", cascade="all", lazy="joined")
     runscript_url = Column(String(250))
     runscript_port = Column(String(25))
 

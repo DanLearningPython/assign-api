@@ -6,19 +6,28 @@ def courses_to_json(results):
 
     json_result = []
 
-    for result in results:
+    for course in results:
         #print (vars(course))
-        #view_obj_structure(result)
-        course = result.Course
-        semester = result.Semester
+
+        semester = course.semester
+        assignments = []
+
+        #view_obj_structure(course)
+
+        print(course.assignments)
+        for assignment in course.assignments:
+            tmp_assignment = assignment_to_json(assignment)
+            assignments.append(tmp_assignment.copy())
+
         tmp = {
             'id' : course.id,
             'course_name': course.course_name,
-            'semester': [
-                semester.id,
-                semester.season,
-                semester.year
-            ]
+            'semester': {
+                'id': semester.id,
+                'season': semester.season,
+                'year': semester.year
+            },
+            'assignments' : assignments
         }
         json_result.append(tmp.copy())
 

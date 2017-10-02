@@ -31,11 +31,10 @@ class Home(Resource):
 
 class CourseApi(Resource):
 
-    @require_api_token
     def get(self):
         course_session = session()
 
-        courses = course_session.query(Course, Semester).join(Semester, Course.semester_id == Semester.id).all()
+        courses = course_session.query(Course).all()
         #print (courses.statement)
         courses_json = courses_to_json(courses)
         course_session.close()
